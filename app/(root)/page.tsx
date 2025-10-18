@@ -27,14 +27,14 @@ const NotLoggedIn = () => (
 export default async function Home() {
 	const cookieStore = await cookies();
 	const sessionToken = cookieStore.get("session_token");
+
 	if (!sessionToken) return <NotLoggedIn />;
+
 	try {
 		const res = await axios.get(
 			`${process.env.NEXT_PUBLIC_API_URL}/auth/get-session-data`,
 			{
-				headers: {
-					Cookie: `session_token=${sessionToken.value}`
-				}
+				headers: { Cookie: `session_token=${sessionToken.value}` }
 			}
 		);
 
@@ -48,9 +48,8 @@ export default async function Home() {
 						<Avatar className="size-12">
 							<AvatarImage
 								src={user.avatarUrl ?? "https://github.com/shadcn.png"}
-								alt="@shadcn"
 							/>
-							<AvatarFallback>CN</AvatarFallback>
+							<AvatarFallback>{user.name[0]}</AvatarFallback>
 						</Avatar>
 						<div>
 							<CardTitle className="flex items-center gap-2 flex-wrap">
