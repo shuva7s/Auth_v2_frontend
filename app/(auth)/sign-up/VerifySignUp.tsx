@@ -53,8 +53,7 @@ const VerifySignUp = () => {
 		setError("");
 		setLoading(true);
 		try {
-			const res = await api.post("/auth/verify-signup-otp", data);
-			console.log("Signup response:", res.data);
+			await api.post("/auth/verify-signup-otp", data);
 			toast.success("Account created successfully, Please login to continue.");
 			setSuccess(true);
 			router.push("/sign-in");

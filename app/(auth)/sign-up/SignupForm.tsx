@@ -58,8 +58,7 @@ const SignupForm = ({
 		setError("");
 		setLoading(true);
 		try {
-			const res = await api.post("/auth/sign-up", values);
-			console.log("Signup response:", res.data);
+			await api.post("/auth/sign-up", values);
 			const cookieVal = Cookies.get("signup_pending");
 			if (cookieVal) {
 				setPendingCookie(cookieVal);
