@@ -1,12 +1,6 @@
 import { ModeToggle } from "@/components/mode-toggle";
 import { cookies } from "next/headers";
-import axios, { AxiosError } from "axios";
-import {
-	Feedback,
-	FeedbackDescription,
-	FeedbackTitle
-} from "@/components/ui/feedback";
-import { CircleXIcon } from "lucide-react";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
@@ -72,21 +66,7 @@ export default async function Home() {
 				</Card>
 			</main>
 		);
-	} catch (error) {
-		let error_mesasge = "You do not have access to this page";
-		if (error instanceof AxiosError) {
-			error_mesasge = error.response?.data.message || error.message;
-		} else if (error instanceof Error) {
-			error_mesasge = error.message;
-		}
-		return (
-			<main className="wrapper py-5 min-h-screen fl_center flex-col gap-4">
-				<Feedback variant={"destructive"}>
-					<CircleXIcon />
-					<FeedbackTitle>Access Denied</FeedbackTitle>
-					<FeedbackDescription>{error_mesasge}</FeedbackDescription>
-				</Feedback>
-			</main>
-		);
+	} catch {
+		return <NotLoggedIn />;
 	}
 }
