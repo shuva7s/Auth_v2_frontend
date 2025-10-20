@@ -5,7 +5,7 @@ export async function middleware(request: NextRequest) {
 	const sessionToken = request.cookies.get("session_token");
 	const { pathname } = request.nextUrl;
 
-	const publicRoutes = ["/"];
+	const publicRoutes = ["/", "/forgot-password", "/reset-password"];
 	const authRoutes = ["/sign-in", "/sign-up"];
 
 	const isPublicRoute = publicRoutes.includes(pathname);
