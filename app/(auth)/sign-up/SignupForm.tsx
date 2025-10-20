@@ -117,6 +117,7 @@ const SignupForm = ({
 											placeholder="John Doe"
 											aria-invalid={fieldState.invalid}
 											autoComplete="off"
+											disabled={loading}
 										/>
 										<InputGroupAddon align="inline-start">
 											<UserIcon />
@@ -141,6 +142,7 @@ const SignupForm = ({
 											placeholder="john@example.com"
 											aria-invalid={fieldState.invalid}
 											autoComplete="off"
+											disabled={loading}
 										/>
 										<InputGroupAddon align="inline-start">
 											<MailIcon />
@@ -165,6 +167,7 @@ const SignupForm = ({
 											id="signup-password"
 											placeholder="Enter your password"
 											aria-invalid={fieldState.invalid}
+											disabled={loading}
 										/>
 										<InputGroupAddon align="inline-start">
 											<LockIcon />

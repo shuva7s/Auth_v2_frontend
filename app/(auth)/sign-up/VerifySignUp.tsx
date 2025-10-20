@@ -82,7 +82,6 @@ const VerifySignUp = () => {
 				"/auth/verify-signup-otp",
 				data
 			);
-			toast.success(res.data.message);
 			setSuccess(true);
 			const auto_sign_in_enabled = res.data.redirectPath === "/";
 			if (auto_sign_in_enabled) {
@@ -90,6 +89,7 @@ const VerifySignUp = () => {
 			} else {
 				router.push(res.data.redirectPath);
 			}
+			toast.success(res.data.message);
 		} catch (error) {
 			if (error instanceof AxiosError) {
 				setError(error.response?.data.message);
@@ -169,7 +169,7 @@ const VerifySignUp = () => {
 
 			<CardFooter className="text-xs text-muted-foreground">
 				Didn&apos;t receive an otp?
-				<Button variant="link" disabled>
+				<Button variant="link" disabled size="xs">
 					Resend
 				</Button>
 			</CardFooter>
