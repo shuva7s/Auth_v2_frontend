@@ -111,7 +111,11 @@ const VerifySignUp = () => {
 				<CardTitle className="text-lg">Verify OTP</CardTitle>
 				<CardDescription>Enter the OTP sent to your email</CardDescription>
 				<CardAction>
-					<ShieldCheck className="text-muted-foreground size-7 opacity-50" />
+					{loading ? (
+						<Loader2 className="text-muted-foreground size-7 opacity-50 animate-spin" />
+					) : (
+						<ShieldCheck className="text-muted-foreground size-7 opacity-50" />
+					)}
 				</CardAction>
 			</CardHeader>
 			<CardContent className="space-y-5">
@@ -163,7 +167,7 @@ const VerifySignUp = () => {
 					size={"lg"}
 					className="w-full rounded-full"
 				>
-					{loading ? "Submitting..." : "Submit"}
+					{loading ? "Verifying..." : "Verify OTP"}
 				</Button>
 			</CardContent>
 

@@ -17,7 +17,13 @@ import { useState } from "react";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { Feedback, FeedbackTitle } from "@/components/ui/feedback";
-import { CircleXIcon, LockIcon, MailIcon, ShieldEllipsis } from "lucide-react";
+import {
+	CircleXIcon,
+	Loader2,
+	LockIcon,
+	MailIcon,
+	ShieldEllipsis
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -81,7 +87,11 @@ const SigninForm = () => {
 					Sign in to your account
 				</CardDescription>
 				<CardAction>
-					<ShieldEllipsis className="text-muted-foreground size-7 opacity-50" />
+					{loading ? (
+						<Loader2 className="text-muted-foreground size-7 opacity-50 animate-spin" />
+					) : (
+						<ShieldEllipsis className="text-muted-foreground size-7 opacity-50" />
+					)}
 				</CardAction>
 			</CardHeader>
 			<CardContent className="space-y-5">

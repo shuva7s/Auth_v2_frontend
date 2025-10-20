@@ -21,6 +21,7 @@ import Link from "next/link";
 import { Feedback, FeedbackTitle } from "@/components/ui/feedback";
 import {
 	CircleXIcon,
+	Loader2,
 	LockIcon,
 	MailIcon,
 	ShieldPlus,
@@ -92,7 +93,11 @@ const SignupForm = ({
 					Create an account
 				</CardDescription>
 				<CardAction>
-					<ShieldPlus className="text-muted-foreground size-7 opacity-50" />
+					{loading ? (
+						<Loader2 className="text-muted-foreground size-7 opacity-50 animate-spin" />
+					) : (
+						<ShieldPlus className="text-muted-foreground size-7 opacity-50" />
+					)}
 				</CardAction>
 			</CardHeader>
 			<CardContent className="space-y-5">
