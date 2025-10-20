@@ -85,7 +85,7 @@ const VerifySignUp = () => {
 			setSuccess(true);
 			const auto_sign_in_enabled = res.data.redirectPath === "/";
 			if (auto_sign_in_enabled) {
-				router.replace("/");
+				window.location.replace("/");
 			} else {
 				router.push(res.data.redirectPath);
 			}
