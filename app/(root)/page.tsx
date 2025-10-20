@@ -28,7 +28,7 @@ const NotLoggedIn = () => (
 			</CardHeader>
 			<CardFooter className="grid grid-cols-2 gap-2 border-t">
 				<Button asChild variant="outline" className="rounded-full" size="lg">
-					<Link href="/sign-up">Sign UP</Link>
+					<Link href="/sign-up">Sign Up</Link>
 				</Button>
 				<Button asChild className="rounded-full" size="lg">
 					<Link href="/sign-in">Sign In</Link>
