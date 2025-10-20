@@ -161,7 +161,14 @@ const SigninForm = () => {
 					asChild
 					variant={"link"}
 				>
-					<Link href="/sign-up">Sign Up</Link>
+					<Link
+						className={`${
+							(loading || success) && "pointer-events-none opacity-50"
+						}`}
+						href="/sign-up"
+					>
+						Sign Up
+					</Link>
 				</Button>
 			</CardFooter>
 		</Card>

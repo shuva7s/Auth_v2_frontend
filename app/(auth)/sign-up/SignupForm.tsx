@@ -190,8 +190,13 @@ const SignupForm = ({
 			</CardContent>
 			<CardFooter className="text-xs text-muted-foreground justify-center flex-wrap">
 				Already have an account?
-				<Button size={"xs"} disabled={loading} asChild variant={"link"}>
-					<Link href="/sign-in">Sign In</Link>
+				<Button size="xs" asChild variant="link" disabled={loading}>
+					<Link
+						href="/sign-in"
+						className={`${loading && "pointer-events-none opacity-50"}`}
+					>
+						Sign In
+					</Link>
 				</Button>
 			</CardFooter>
 		</Card>
