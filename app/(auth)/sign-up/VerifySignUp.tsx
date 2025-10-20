@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import {
 	Card,
+	CardAction,
 	CardContent,
 	CardDescription,
 	CardFooter,
@@ -21,7 +22,7 @@ import api from "@/lib/axios";
 import { AxiosError, AxiosResponse } from "axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { CircleXIcon, Loader2 } from "lucide-react";
+import { CircleXIcon, Loader2, ShieldCheck } from "lucide-react";
 import { Feedback, FeedbackTitle } from "@/components/ui/feedback";
 import {
 	Field,
@@ -106,8 +107,12 @@ const VerifySignUp = () => {
 
 	return (
 		<Card className="w-full max-w-sm shadow-lg">
-			<CardHeader className="!flex gap-4 items-center">
+			<CardHeader className="gap-y-0.5">
 				<CardTitle className="text-lg">Verify OTP</CardTitle>
+				<CardDescription>Enter the OTP sent to your email</CardDescription>
+				<CardAction>
+					<ShieldCheck className="text-muted-foreground size-7 opacity-50" />
+				</CardAction>
 			</CardHeader>
 			<CardContent className="space-y-5">
 				{error && (
@@ -124,9 +129,7 @@ const VerifySignUp = () => {
 							render={({ field, fieldState }) => (
 								<Field data-invalid={fieldState.invalid}>
 									<FieldLabel htmlFor="verify-otp-field">Enter OTP</FieldLabel>
-									<FieldDescription>
-										Enter the OTP sent to your email
-									</FieldDescription>
+									<FieldDescription></FieldDescription>
 									<InputOTP
 										id="verify-otp-field"
 										disabled={loading}

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
 	Card,
+	CardAction,
 	CardDescription,
 	CardFooter,
 	CardHeader,
@@ -13,14 +14,27 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import LogoutButton from "@/components/shared/LogoutButton";
-
 const NotLoggedIn = () => (
 	<main className="wrapper py-5 min-h-screen fl_center flex-col gap-4">
-		<ModeToggle />
-		<h1 className="text-2xl font-semibold">You are logged out</h1>
-		<Button asChild>
-			<Link href="/sign-in">Log In</Link>
-		</Button>
+		<Card className="w-full max-w-sm shadow-lg">
+			<CardHeader>
+				<CardTitle className="text-lg">You are logged out</CardTitle>
+				<CardDescription className="text-base">
+					Sign In if you already have an account or Sign Up to create a new one.
+				</CardDescription>
+				<CardAction>
+					<ModeToggle />
+				</CardAction>
+			</CardHeader>
+			<CardFooter className="grid grid-cols-2 gap-2 border-t">
+				<Button asChild variant="outline" className="rounded-full" size="lg">
+					<Link href="/sign-up">Sign UP</Link>
+				</Button>
+				<Button asChild className="rounded-full" size="lg">
+					<Link href="/sign-in">Sign In</Link>
+				</Button>
+			</CardFooter>
+		</Card>
 	</main>
 );
 

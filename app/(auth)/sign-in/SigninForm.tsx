@@ -5,6 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
+	CardAction,
 	CardContent,
 	CardDescription,
 	CardFooter,
@@ -16,7 +17,7 @@ import { useState } from "react";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { Feedback, FeedbackTitle } from "@/components/ui/feedback";
-import { CircleXIcon, LockIcon, MailIcon } from "lucide-react";
+import { CircleXIcon, LockIcon, MailIcon, ShieldEllipsis } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -74,11 +75,14 @@ const SigninForm = () => {
 
 	return (
 		<Card className="w-full max-w-sm shadow-lg">
-			<CardHeader className="gap-0.5">
+			<CardHeader className="gap-y-0.5">
 				<CardTitle className="text-lg">Sign In</CardTitle>
 				<CardDescription className="text-base">
 					Sign in to your account
 				</CardDescription>
+				<CardAction>
+					<ShieldEllipsis className="text-muted-foreground size-7 opacity-50" />
+				</CardAction>
 			</CardHeader>
 			<CardContent className="space-y-5">
 				{error && (

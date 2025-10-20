@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
+	CardAction,
 	CardContent,
 	CardDescription,
 	CardFooter,
@@ -18,7 +19,13 @@ import { AxiosError } from "axios";
 import { toast } from "sonner";
 import Link from "next/link";
 import { Feedback, FeedbackTitle } from "@/components/ui/feedback";
-import { CircleXIcon, LockIcon, MailIcon, UserIcon } from "lucide-react";
+import {
+	CircleXIcon,
+	LockIcon,
+	MailIcon,
+	ShieldPlus,
+	UserIcon
+} from "lucide-react";
 import {
 	InputGroup,
 	InputGroupAddon,
@@ -79,11 +86,14 @@ const SignupForm = ({
 
 	return (
 		<Card className="w-full max-w-sm shadow-lg">
-			<CardHeader className="gap-0.5">
+			<CardHeader className="gap-y-0.5">
 				<CardTitle className="text-lg">Sign Up</CardTitle>
 				<CardDescription className="text-base">
 					Create an account
 				</CardDescription>
+				<CardAction>
+					<ShieldPlus className="text-muted-foreground size-7 opacity-50" />
+				</CardAction>
 			</CardHeader>
 			<CardContent className="space-y-5">
 				{error && (
