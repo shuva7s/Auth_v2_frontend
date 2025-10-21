@@ -161,6 +161,7 @@ const SigninForm = () => {
 										</InputGroupAddon>
 										<InputGroupAddon align="inline-end">
 											<Button
+												disabled={loading || success || loadingGoogle}
 												type="button"
 												size="icon-sm"
 												variant="ghost"

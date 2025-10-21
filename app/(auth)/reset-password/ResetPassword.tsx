@@ -52,12 +52,17 @@ const InvalidToken = ({ message }: { message?: string }) => (
 	</Card>
 );
 
-const ResetPasswordSchema = z.object({
-	new_password: z.string().min(8, "Password must be at least 8 characters"),
-	confirm_new_password: z
-		.string()
-		.min(8, "Password must be at least 8 characters")
-});
+const ResetPasswordSchema = z
+	.object({
+		new_password: z.string().min(8, "Password must be at least 8 characters"),
+		confirm_new_password: z
+			.string()
+			.min(8, "Password must be at least 8 characters")
+	})
+	.refine((data) => data.new_password === data.confirm_new_password, {
+		message: "Passwords do not match",
+		path: ["confirm_new_password"]
+	});
 
 const ResetPassword = () => {
 	const [token, setToken] = useState<string | null>(null);
@@ -177,6 +182,7 @@ const ResetPassword = () => {
 										</InputGroupAddon>
 										<InputGroupAddon align="inline-end">
 											<Button
+												disabled={loading}
 												type="button"
 												size="icon-sm"
 												variant="ghost"
@@ -216,6 +222,7 @@ const ResetPassword = () => {
 										</InputGroupAddon>
 										<InputGroupAddon align="inline-end">
 											<Button
+												disabled={loading}
 												type="button"
 												size="icon-sm"
 												variant="ghost"

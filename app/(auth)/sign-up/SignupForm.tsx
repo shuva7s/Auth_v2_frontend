@@ -184,6 +184,7 @@ const SignupForm = ({
 										</InputGroupAddon>
 										<InputGroupAddon align="inline-end">
 											<Button
+												disabled={loading || loadingGoogle}
 												type="button"
 												size="icon-sm"
 												variant="ghost"
