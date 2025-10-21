@@ -5,8 +5,19 @@ import { AxiosError } from "axios";
 import { toast } from "sonner";
 import api from "@/lib/axios";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import {
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger
+} from "@/components/ui/dialog";
 
-const LogoutButton = () => {
+const LogoutButton = ({ className }: { className?: string }) => {
 	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
@@ -28,14 +39,37 @@ const LogoutButton = () => {
 		}
 	};
 	return (
-		<Button
-			onClick={handleLogout}
-			variant="secondary"
-			className="w-full"
-			disabled={loading}
-		>
-			{loading ? "Signing out..." : "Sign out"}
-		</Button>
+		<Dialog>
+			<DialogTrigger asChild>
+				<Button
+					variant="secondary"
+					className={cn(className)}
+					disabled={loading}
+				>
+					{loading ? "Signing out..." : "Sign out"}
+				</Button>
+			</DialogTrigger>
+			<DialogContent>
+				<DialogHeader>
+					<DialogTitle>Are you absolutely sure?</DialogTitle>
+					<DialogDescription>This action will log you out.</DialogDescription>
+				</DialogHeader>
+				<DialogFooter>
+					<DialogClose asChild>
+						<Button variant="outline">Cancel</Button>
+					</DialogClose>
+					<DialogClose asChild>
+						<Button
+							onClick={handleLogout}
+							variant="destructive"
+							disabled={loading}
+						>
+							{loading ? "Signing out..." : "Sign out"}
+						</Button>
+					</DialogClose>
+				</DialogFooter>
+			</DialogContent>
+		</Dialog>
 	);
 };
 

@@ -57,24 +57,24 @@ export default async function Home() {
 		return (
 			<main className="wrapper py-5 min-h-screen fl_center flex-col gap-4">
 				<ModeToggle />
-				<Card className="w-full max-w-sm">
-					<CardHeader className="!flex gap-4 items-center">
-						<Avatar className="size-12">
+				<Card className="w-full max-w-sm shadow-lg">
+					<div className="px-6 fl_center">
+						<Avatar className="size-16">
 							<AvatarImage
 								src={user.avatarUrl ?? "https://github.com/shadcn.png"}
 							/>
 							<AvatarFallback>{user.name[0]}</AvatarFallback>
 						</Avatar>
-						<div>
-							<CardTitle className="flex items-center gap-2 flex-wrap">
-								{user.name}
-								<Badge>{user.role}</Badge>
-							</CardTitle>
-							<CardDescription className="mt-1">{user.email}</CardDescription>
-						</div>
+					</div>
+
+					<CardHeader className="text-center gap-y-0.5">
+						<CardTitle>
+							{user.name} <Badge>{user.role}</Badge>
+						</CardTitle>
+						<CardDescription className="mt-1">{user.email}</CardDescription>
 					</CardHeader>
-					<CardFooter className="justify-end">
-						<LogoutButton />
+					<CardFooter>
+						<LogoutButton className="flex-1" />
 					</CardFooter>
 				</Card>
 			</main>

@@ -199,7 +199,8 @@ const SigninForm = () => {
 				>
 					<Link
 						className={`${
-							(loading || success) && "pointer-events-none opacity-50"
+							(loading || loadingGoogle || success) &&
+							"pointer-events-none opacity-50"
 						}`}
 						href="/sign-up"
 					>
