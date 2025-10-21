@@ -21,6 +21,8 @@ import Link from "next/link";
 import { Feedback, FeedbackTitle } from "@/components/ui/feedback";
 import {
 	CircleXIcon,
+	Eye,
+	EyeClosed,
 	Loader2,
 	LockIcon,
 	MailIcon,
@@ -55,6 +57,7 @@ const SignupForm = ({
 	const [loading, setLoading] = useState(false);
 	const [loadingGoogle, setLoadingGoogle] = useState(false);
 	const [error, setError] = useState<string>("");
+	const [showPassword, setShowPassword] = useState(false);
 	const form = useForm<z.infer<typeof SignupFormSchema>>({
 		resolver: zodResolver(SignupFormSchema),
 		defaultValues: {
@@ -170,7 +173,7 @@ const SignupForm = ({
 									<InputGroup inputSize="lg">
 										<InputGroupInput
 											{...field}
-											type="password"
+											type={showPassword ? "text" : "password"}
 											id="signup-password"
 											placeholder="Enter your password"
 											aria-invalid={fieldState.invalid}
@@ -178,6 +181,18 @@ const SignupForm = ({
 										/>
 										<InputGroupAddon align="inline-start">
 											<LockIcon />
+										</InputGroupAddon>
+										<InputGroupAddon align="inline-end">
+											<Button
+												type="button"
+												size="icon-sm"
+												variant="ghost"
+												className="text-muted-foreground"
+												onClick={() => setShowPassword((show) => !show)}
+											>
+												<span className="sr-only">Show / Hide Password</span>
+												{showPassword ? <EyeClosed /> : <Eye />}
+											</Button>
 										</InputGroupAddon>
 									</InputGroup>
 									{fieldState.invalid && (

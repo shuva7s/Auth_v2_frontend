@@ -59,11 +59,7 @@ const LogoutButton = ({ className }: { className?: string }) => {
 						<Button variant="outline">Cancel</Button>
 					</DialogClose>
 					<DialogClose asChild>
-						<Button
-							onClick={handleLogout}
-							variant="destructive"
-							disabled={loading}
-						>
+						<Button onClick={handleLogout} disabled={loading}>
 							{loading ? "Signing out..." : "Sign out"}
 						</Button>
 					</DialogClose>

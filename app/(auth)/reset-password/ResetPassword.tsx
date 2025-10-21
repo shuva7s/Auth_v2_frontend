@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/card";
 import {
 	CircleXIcon,
+	Eye,
+	EyeClosed,
 	Loader2,
 	LockIcon,
 	ShieldEllipsis,
@@ -63,6 +65,9 @@ const ResetPassword = () => {
 	const [validating, setValidating] = useState(true);
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
+
+	const [showNewPassword, setShowNewPassword] = useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
@@ -161,7 +166,7 @@ const ResetPassword = () => {
 									<InputGroup inputSize="lg">
 										<InputGroupInput
 											{...field}
-											type="password"
+											type={showNewPassword ? "text" : "password"}
 											id="new-password"
 											placeholder="Enter new password"
 											aria-invalid={fieldState.invalid}
@@ -169,6 +174,18 @@ const ResetPassword = () => {
 										/>
 										<InputGroupAddon align="inline-start">
 											<LockIcon />
+										</InputGroupAddon>
+										<InputGroupAddon align="inline-end">
+											<Button
+												type="button"
+												size="icon-sm"
+												variant="ghost"
+												className="text-muted-foreground"
+												onClick={() => setShowNewPassword((show) => !show)}
+											>
+												<span className="sr-only">Show / Hide Password</span>
+												{showNewPassword ? <EyeClosed /> : <Eye />}
+											</Button>
 										</InputGroupAddon>
 									</InputGroup>
 									{fieldState.invalid && (
@@ -188,7 +205,7 @@ const ResetPassword = () => {
 									<InputGroup inputSize="lg">
 										<InputGroupInput
 											{...field}
-											type="password"
+											type={showConfirmPassword ? "text" : "password"}
 											id="confirm-new-password"
 											placeholder="Confirm new password"
 											aria-invalid={fieldState.invalid}
@@ -196,6 +213,18 @@ const ResetPassword = () => {
 										/>
 										<InputGroupAddon align="inline-start">
 											<LockIcon />
+										</InputGroupAddon>
+										<InputGroupAddon align="inline-end">
+											<Button
+												type="button"
+												size="icon-sm"
+												variant="ghost"
+												className="text-muted-foreground"
+												onClick={() => setShowConfirmPassword((show) => !show)}
+											>
+												<span className="sr-only">Show / Hide Password</span>
+												{showConfirmPassword ? <EyeClosed /> : <Eye />}
+											</Button>
 										</InputGroupAddon>
 									</InputGroup>
 									{fieldState.invalid && (

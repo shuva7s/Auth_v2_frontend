@@ -19,6 +19,8 @@ import { toast } from "sonner";
 import { Feedback, FeedbackTitle } from "@/components/ui/feedback";
 import {
 	CircleXIcon,
+	Eye,
+	EyeClosed,
 	Loader2,
 	LockIcon,
 	MailIcon,
@@ -50,6 +52,7 @@ const SigninForm = () => {
 	const [loadingGoogle, setLoadingGoogle] = useState(false);
 	const [error, setError] = useState<string>("");
 	const [success, setSuccess] = useState<boolean>(false);
+	const [showPassword, setShowPassword] = useState(false);
 	const router = useRouter();
 
 	const form = useForm<z.infer<typeof SigninFormSchema>>({
@@ -135,11 +138,19 @@ const SigninForm = () => {
 							control={form.control}
 							render={({ field, fieldState }) => (
 								<Field data-invalid={fieldState.invalid}>
-									<FieldLabel htmlFor="signin-password">Password</FieldLabel>
+									<div className="flex gap-4 justify-between flex-wrap items-center">
+										<FieldLabel htmlFor="signin-password">Password</FieldLabel>
+										<Link
+											className="text-xs text-muted-foreground hover:underline"
+											href={"/forgot-password"}
+										>
+											Forgot password?
+										</Link>
+									</div>
 									<InputGroup inputSize="lg">
 										<InputGroupInput
 											{...field}
-											type="password"
+											type={showPassword ? "text" : "password"}
 											id="signin-password"
 											placeholder="Enter your password"
 											aria-invalid={fieldState.invalid}
@@ -147,6 +158,18 @@ const SigninForm = () => {
 										/>
 										<InputGroupAddon align="inline-start">
 											<LockIcon />
+										</InputGroupAddon>
+										<InputGroupAddon align="inline-end">
+											<Button
+												type="button"
+												size="icon-sm"
+												variant="ghost"
+												className="text-muted-foreground"
+												onClick={() => setShowPassword((show) => !show)}
+											>
+												<span className="sr-only">Show / Hide Password</span>
+												{showPassword ? <EyeClosed /> : <Eye />}
+											</Button>
 										</InputGroupAddon>
 									</InputGroup>
 									{fieldState.invalid && (
