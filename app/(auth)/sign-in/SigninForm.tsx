@@ -38,6 +38,7 @@ import {
 	InputGroupInput
 } from "@/components/ui/input-group";
 import Link from "next/link";
+import Image from "next/image";
 
 const SigninFormSchema = z.object({
 	email: z.email("Invalid email"),
@@ -46,6 +47,7 @@ const SigninFormSchema = z.object({
 
 const SigninForm = () => {
 	const [loading, setLoading] = useState(false);
+	const [loadingGoogle, setLoadingGoogle] = useState(false);
 	const [error, setError] = useState<string>("");
 	const [success, setSuccess] = useState<boolean>(false);
 	const router = useRouter();
@@ -87,7 +89,7 @@ const SigninForm = () => {
 					Sign in to your account
 				</CardDescription>
 				<CardAction>
-					{loading ? (
+					{loading || loadingGoogle ? (
 						<Loader2 className="text-muted-foreground size-7 opacity-50 animate-spin" />
 					) : (
 						<ShieldEllipsis className="text-muted-foreground size-7 opacity-50" />
@@ -116,7 +118,7 @@ const SigninForm = () => {
 											placeholder="john@example.com"
 											aria-invalid={fieldState.invalid}
 											autoComplete="off"
-											disabled={loading || success}
+											disabled={loading || success || loadingGoogle}
 										/>
 										<InputGroupAddon align="inline-start">
 											<MailIcon />
@@ -141,7 +143,7 @@ const SigninForm = () => {
 											id="signin-password"
 											placeholder="Enter your password"
 											aria-invalid={fieldState.invalid}
-											disabled={loading || success}
+											disabled={loading || success || loadingGoogle}
 										/>
 										<InputGroupAddon align="inline-start">
 											<LockIcon />
@@ -158,18 +160,40 @@ const SigninForm = () => {
 				<Button
 					form="signin-form"
 					type="submit"
-					disabled={loading || success}
+					disabled={loading || success || loadingGoogle}
 					size={"lg"}
 					className="w-full rounded-full"
 				>
 					{loading ? "Signing in..." : success ? "Signed in" : "Sign in"}
+				</Button>
+				<hr />
+				<Button
+					type="submit"
+					disabled={loading || success || loadingGoogle}
+					size={"lg"}
+					className="w-full rounded-full"
+					variant={"outline"}
+					onClick={() => {
+						setLoadingGoogle(true);
+						window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
+					}}
+				>
+					<Image
+						src={"/google.svg"}
+						width={35}
+						height={35}
+						alt="Google logo"
+						className="size-5"
+						priority
+					/>
+					Continue with Google
 				</Button>
 			</CardContent>
 			<CardFooter className="text-xs text-muted-foreground justify-center flex-wrap">
 				Don&apos;t have an account?
 				<Button
 					size={"xs"}
-					disabled={loading || success}
+					disabled={loading || success || loadingGoogle}
 					asChild
 					variant={"link"}
 				>

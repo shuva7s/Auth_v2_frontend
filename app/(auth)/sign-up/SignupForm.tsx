@@ -39,6 +39,7 @@ import {
 	FieldGroup,
 	FieldLabel
 } from "@/components/ui/field";
+import Image from "next/image";
 
 const SignupFormSchema = z.object({
 	name: z.string().min(1, "Name is required"),
@@ -52,6 +53,7 @@ const SignupForm = ({
 	setPendingCookie: React.Dispatch<React.SetStateAction<string | undefined>>;
 }) => {
 	const [loading, setLoading] = useState(false);
+	const [loadingGoogle, setLoadingGoogle] = useState(false);
 	const [error, setError] = useState<string>("");
 	const form = useForm<z.infer<typeof SignupFormSchema>>({
 		resolver: zodResolver(SignupFormSchema),
@@ -93,7 +95,7 @@ const SignupForm = ({
 					Create an account
 				</CardDescription>
 				<CardAction>
-					{loading ? (
+					{loading || loadingGoogle ? (
 						<Loader2 className="text-muted-foreground size-7 opacity-50 animate-spin" />
 					) : (
 						<ShieldPlus className="text-muted-foreground size-7 opacity-50" />
@@ -122,7 +124,7 @@ const SignupForm = ({
 											placeholder="John Doe"
 											aria-invalid={fieldState.invalid}
 											autoComplete="off"
-											disabled={loading}
+											disabled={loading || loadingGoogle}
 										/>
 										<InputGroupAddon align="inline-start">
 											<UserIcon />
@@ -147,7 +149,7 @@ const SignupForm = ({
 											placeholder="john@example.com"
 											aria-invalid={fieldState.invalid}
 											autoComplete="off"
-											disabled={loading}
+											disabled={loading || loadingGoogle}
 										/>
 										<InputGroupAddon align="inline-start">
 											<MailIcon />
@@ -172,7 +174,7 @@ const SignupForm = ({
 											id="signup-password"
 											placeholder="Enter your password"
 											aria-invalid={fieldState.invalid}
-											disabled={loading}
+											disabled={loading || loadingGoogle}
 										/>
 										<InputGroupAddon align="inline-start">
 											<LockIcon />
@@ -190,18 +192,47 @@ const SignupForm = ({
 					form="signup-form"
 					type="submit"
 					size={"lg"}
-					disabled={loading}
+					disabled={loading || loadingGoogle}
 					className="w-full rounded-full"
 				>
 					{loading ? "Signing up..." : "Sign Up"}
 				</Button>
+				<hr />
+				<Button
+					type="submit"
+					disabled={loading || loadingGoogle}
+					size={"lg"}
+					className="w-full rounded-full"
+					variant={"outline"}
+					onClick={() => {
+						setLoadingGoogle(true);
+						window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
+					}}
+				>
+					<Image
+						src={"/google.svg"}
+						width={35}
+						height={35}
+						alt="Google logo"
+						className="size-5"
+						priority
+					/>
+					Continue with Google
+				</Button>
 			</CardContent>
 			<CardFooter className="text-xs text-muted-foreground justify-center flex-wrap">
 				Already have an account?
-				<Button size="xs" asChild variant="link" disabled={loading}>
+				<Button
+					size="xs"
+					asChild
+					variant="link"
+					disabled={loading || loadingGoogle}
+				>
 					<Link
 						href="/sign-in"
-						className={`${loading && "pointer-events-none opacity-50"}`}
+						className={`${
+							(loading || loadingGoogle) && "pointer-events-none opacity-50"
+						}`}
 					>
 						Sign In
 					</Link>
