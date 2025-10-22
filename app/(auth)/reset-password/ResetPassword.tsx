@@ -110,6 +110,8 @@ const ResetPassword = () => {
 
 	async function onSubmit(values: z.infer<typeof ResetPasswordSchema>) {
 		setError("");
+		setShowNewPassword(false);
+		setShowConfirmPassword(false);
 		setLoading(true);
 		try {
 			const res = await api.post("/auth/reset-password", { token, ...values });

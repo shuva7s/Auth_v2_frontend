@@ -13,7 +13,7 @@ import {
 	CardTitle
 } from "@/components/ui/card";
 import api from "@/lib/axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { Feedback, FeedbackTitle } from "@/components/ui/feedback";
@@ -50,6 +50,20 @@ const SigninFormSchema = z.object({
 const SigninForm = () => {
 	const [loading, setLoading] = useState(false);
 	const [loadingGoogle, setLoadingGoogle] = useState(false);
+	useEffect(() => {
+		setLoadingGoogle(false);
+
+		const handleVisibilityChange = () => {
+			if (document.visibilityState === "visible") {
+				setLoadingGoogle(false);
+			}
+		};
+
+		document.addEventListener("visibilitychange", handleVisibilityChange);
+		return () => {
+			document.removeEventListener("visibilitychange", handleVisibilityChange);
+		};
+	}, []);
 	const [error, setError] = useState<string>("");
 	const [success, setSuccess] = useState<boolean>(false);
 	const [showPassword, setShowPassword] = useState(false);
@@ -65,6 +79,7 @@ const SigninForm = () => {
 
 	async function onSubmit(values: z.infer<typeof SigninFormSchema>) {
 		setError("");
+		setShowPassword(false);
 		setLoading(true);
 		try {
 			await api.post("/auth/sign-in", values);
@@ -192,12 +207,13 @@ const SigninForm = () => {
 				</Button>
 				<hr />
 				<Button
-					type="submit"
+					type="button"
 					disabled={loading || success || loadingGoogle}
 					size={"lg"}
 					className="w-full rounded-full"
 					variant={"outline"}
 					onClick={() => {
+						if (loadingGoogle) return;
 						setLoadingGoogle(true);
 						window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
 					}}

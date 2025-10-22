@@ -14,7 +14,7 @@ import {
 	CardTitle
 } from "@/components/ui/card";
 import api from "@/lib/axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -56,6 +56,21 @@ const SignupForm = ({
 }) => {
 	const [loading, setLoading] = useState(false);
 	const [loadingGoogle, setLoadingGoogle] = useState(false);
+	useEffect(() => {
+		setLoadingGoogle(false);
+
+		const handleVisibilityChange = () => {
+			if (document.visibilityState === "visible") {
+				setLoadingGoogle(false);
+			}
+		};
+
+		document.addEventListener("visibilitychange", handleVisibilityChange);
+		return () => {
+			document.removeEventListener("visibilitychange", handleVisibilityChange);
+		};
+	}, []);
+
 	const [error, setError] = useState<string>("");
 	const [showPassword, setShowPassword] = useState(false);
 	const form = useForm<z.infer<typeof SignupFormSchema>>({
@@ -70,6 +85,7 @@ const SignupForm = ({
 	async function onSubmit(values: z.infer<typeof SignupFormSchema>) {
 		setError("");
 		setLoading(true);
+		setShowPassword(false);
 		try {
 			await api.post("/auth/sign-up", values);
 			const cookieVal = Cookies.get("signup_pending");
@@ -215,18 +231,19 @@ const SignupForm = ({
 				</Button>
 				<hr />
 				<Button
-					type="submit"
-					disabled={loading || loadingGoogle}
-					size={"lg"}
+					type="button"
+					size="lg"
 					className="w-full rounded-full"
-					variant={"outline"}
+					variant="outline"
+					disabled={loading || loadingGoogle}
 					onClick={() => {
+						if (loadingGoogle) return;
 						setLoadingGoogle(true);
 						window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
 					}}
 				>
 					<Image
-						src={"/google.svg"}
+						src="/google.svg"
 						width={35}
 						height={35}
 						alt="Google logo"
