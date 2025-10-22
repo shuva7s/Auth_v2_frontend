@@ -6,13 +6,20 @@ export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
 
 	const publicRoutes = ["/", "/forgot-password", "/reset-password"];
+	const metaDataRoutes = [
+		"/robots.txt",
+		"/sitemap.xml",
+		"/manifest.json",
+		"/favicon.ico"
+	];
 	const authRoutes = ["/sign-in", "/sign-up"];
 
 	const isPublicRoute = publicRoutes.includes(pathname);
+	const isMetaDataRoute = metaDataRoutes.includes(pathname);
 	const isAuthRoute = authRoutes.includes(pathname);
 
 	// 1. Public routes - always accessible
-	if (isPublicRoute) {
+	if (isPublicRoute || isMetaDataRoute) {
 		return NextResponse.next();
 	}
 
